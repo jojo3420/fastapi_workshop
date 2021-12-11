@@ -41,9 +41,9 @@ def get_me():
 def get_member():
     # http GET :8000/member
     inventory = [
-        Item(name='의류', price=500.0, amount=1),
-        Item(name='자동차', price=1500.0, amount=2),
-        Item(name='집', price=300.0, amount=5),
+        Item(name='의류', price=500_000.0, amount=1),
+        Item(name='자동차', price=150_000_000.0, amount=2),
+        Item(name='집', price=3_000_000_000.0, amount=5),
     ]
     fake_user = Member(name='park', password=1234,
                        inventory=inventory)
