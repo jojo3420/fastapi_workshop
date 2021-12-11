@@ -1,0 +1,27 @@
+GET http://localhost:8000
+
+###
+
+
+GET http://localhost:8000/qs?id=111&page=222
+Accept: application/json
+
+
+###
+
+
+GET http://localhost:8000/users?is_admin=true
+Accept: application/json
+
+###
+
+GET http://localhost:8000/member?grade=B
+Accept: application/json
+
+###
+
+
+GET http://localhost:8000/me?name=park&age=100
+
+
+###

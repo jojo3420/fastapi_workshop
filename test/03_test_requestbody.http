@@ -1,0 +1,54 @@
+
+###
+
+GET http://localhost:8000/me
+
+###
+
+GET http://localhost:8000/member
+
+###
+
+
+POST http://localhost:8000/member
+Content-Type: application/json
+
+{
+  "name": "park",
+  "password": "123"
+}
+
+###
+
+
+POST http://localhost:8000/member
+Content-Type: application/json
+
+{
+  "name": "JOJO",
+  "password": 1234,
+  "inventory": [
+    {
+      "name": "apple",
+      "price": 20.1
+    },
+    {
+      "name": "banana",
+      "price": 50.1,
+      "amount": 5
+    }
+  ]
+}
+
+###
+
+PUT http://localhost:8000/member
+Content-Type: application/json
+
+{
+  "name": "goodman",
+  "password": "abc1234"
+}
+
+###
+
