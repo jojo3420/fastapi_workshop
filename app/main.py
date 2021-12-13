@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException, Form
+from fastapi import Depends, FastAPI, HTTPException, Form, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 import uvicorn
@@ -12,6 +12,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.mount('/static', StaticFiles(directory='static'), name='static')
+
+
 # http://localhost:8000/static/login.html 접근가능
 
 def get_db():
@@ -40,6 +42,8 @@ def read_users(db: Session = Depends(get_db)):
     return db.query(models.User).all()
 
 
+# 핸들러에서 Form 매개변수로 받으니  요청시 application/x-www-form-urlencoded
+# 알아서 설정된다.
 @app.post('/login')  # response_model=schemas.User
 def login_form(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = db.query(models.User).filter_by(email=email).first()
@@ -51,6 +55,20 @@ def login_form(email: str = Form(...), password: str = Form(...), db: Session = 
         }
     return {
         'msg': 'USER NOT FOUND'
+    }
+
+
+@app.post('/signin')
+def sign_in(
+        email: str = Form(...),
+        password: str = Form(...),
+        file: UploadFile = File(...)  # 파일로 받기..
+):
+    return {
+        'email': email,
+        'password': password,
+        'filename': file.filename,
+        'content_type': file.content_type
     }
 
 
