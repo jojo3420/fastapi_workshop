@@ -12,7 +12,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.mount('/static', StaticFiles(directory='static'), name='static')
-
+# http://localhost:8000/static/login.html 접근가능
 
 def get_db():
     db = SessionLocal()
