@@ -43,7 +43,7 @@ async def save_file(file: UploadFile = File(...)):
         print(i)
     # print('-' * 100)
     path = await store_file(file.file)
-    # print(path)
+    print(path)
     for j in range(6, 10):
         print(j)
     # print('-' * 100)
@@ -54,4 +54,4 @@ async def save_file(file: UploadFile = File(...)):
 
 
 if __name__ == '__main__':
-    uvicorn.run('main2:app', reload=True)
+    uvicorn.run('07_file_save:app', reload=True)
