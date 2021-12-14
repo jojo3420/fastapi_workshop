@@ -3,7 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from utils import load_env
 
-env = load_env('env.json')
+env: dict = load_env('env.json')
+
 user = env.get('USER')
 password = env.get('PASSWORD')
 schema = env.get('SCHEMA')

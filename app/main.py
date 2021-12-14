@@ -8,6 +8,7 @@ import models
 import schemas
 from database import SessionLocal, engine
 
+# models 구조에 따라 DB 생성
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
