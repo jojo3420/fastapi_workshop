@@ -4,30 +4,28 @@ import uvicorn
 app = FastAPI()
 
 
-@app.get('/')
+@app.get("/")
 def main():
-    return {'msg': 'hello world'}
+    return {"msg": "hello world"}
 
 
-@app.get('/users/me')
+@app.get("/users/me")
 def get_current_user():
     # 위로 올려짐..
-    return {'user': 'me'}
+    return {"user": "me"}
 
 
-@app.get('/users/{user_id}')
+@app.get("/users/{user_id}")
 def read_user(user_id: int):
-    print(f'this is /user/{user_id}')
-    return {'user_id': user_id}
+    print(f"this is /user/{user_id}")
+    return {"user_id": user_id}
 
 
-@app.get('/log/{user_id}')
+@app.get("/log/{user_id}")
 def log_client(user_id: float, request: Request):  # fastapi Request
     print(request.path_params)
     print(request)
-    return {
-        'user_id': user_id
-    }
+    return {"user_id": user_id}
 
 
 # # fast api 단점
@@ -39,6 +37,6 @@ def log_client(user_id: float, request: Request):  # fastapi Request
 #     return {'user': 'mr. park'}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # 모듈이름:FastAPI Instance이름
-    uvicorn.run('01_hello_world:app', reload=True)
+    uvicorn.run("01_hello_world:app", reload=True)

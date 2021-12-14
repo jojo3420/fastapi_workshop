@@ -10,34 +10,34 @@ class User(BaseModel):
     name: str
     # password: str
     # avatar_url: Optional[HttpUrl] = None
-    avatar_url = 'https://icotar.com/avatar/fastcampus.png?s=200'
+    avatar_url = "https://icotar.com/avatar/fastcampus.png?s=200"
 
 
 class CreateUser(User):
     password: str
 
 
-@app.post('/users/me', response_model=User)
+@app.post("/users/me", response_model=User)
 def get_user(user: User):
     # http POST :8000/users/me name=park
     return user
 
 
 @app.post(
-    '/users',
+    "/users",
     response_model=User,  # 응답 모델
     # status_code=201  # 응답코드 201 Created
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
 )
 def create_user(user: CreateUser):  # 요청모델
     # http POST :8000/users name=park password=1234
     # http POST :8000/users name=park password=1234 avatar_url=https://naver.com
-    print('회원가입: ', user)
+    print("회원가입: ", user)
     return user
 
 
 class Member(BaseModel):
-    name = 'fastapi'
+    name = "fastapi"
     password: str
     avatar_url: HttpUrl = None
 
@@ -53,5 +53,5 @@ class Member(BaseModel):
 #     return Member
 
 
-if __name__ == '__main__':
-    uvicorn.run('04_response_model:app', reload=True)
+if __name__ == "__main__":
+    uvicorn.run("04_response_model:app", reload=True)

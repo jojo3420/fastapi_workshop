@@ -2,10 +2,11 @@ import json
 
 
 def load_env(path):
-    """ load env json file """
+    """load env json file"""
     with open(path) as f:
         env = json.load(f)
         return env
+
 
 #
 # if __name__ == '__main__':

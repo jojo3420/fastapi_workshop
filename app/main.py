@@ -14,7 +14,7 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 # /static 경로 생성과 static 자원 등록
 # http://localhost:8000/static/login.html 접근가능
-app.mount('/static', StaticFiles(directory='static'), name='static')
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def get_db():
@@ -25,7 +25,7 @@ def get_db():
         db.close()
 
 
-@app.post('/users', response_model=schemas.User)
+@app.post("/users", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     exited_user = db.query(models.User).filter_by(email=user.email).first()
     if exited_user:
@@ -38,40 +38,38 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@app.get('/users', response_model=List[schemas.User])
+@app.get("/users", response_model=List[schemas.User])
 def read_users(db: Session = Depends(get_db)):
     return db.query(models.User).all()
 
 
 # 핸들러에서 Form 매개변수로 받으니  요청시 application/x-www-form-urlencoded
 # 알아서 설정된다.
-@app.post('/login')  # response_model=schemas.User
-def login_form(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+@app.post("/login")  # response_model=schemas.User
+def login_form(
+    email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)
+):
     user = db.query(models.User).filter_by(email=email).first()
     if user:
         if user.password == password:
             return user
-        return {
-            'msg': "PASSWORD IS NOT MATCHING"
-        }
-    return {
-        'msg': 'USER NOT FOUND'
-    }
+        return {"msg": "PASSWORD IS NOT MATCHING"}
+    return {"msg": "USER NOT FOUND"}
 
 
-@app.post('/signin')
+@app.post("/signin")
 def sign_in(
-        email: str = Form(...),
-        password: str = Form(...),
-        file: UploadFile = File(...)  # 파일로 받기..
+    email: str = Form(...),
+    password: str = Form(...),
+    file: UploadFile = File(...),  # 파일로 받기..
 ):
     return {
-        'email': email,
-        'password': password,
-        'filename': file.filename,
-        'content_type': file.content_type
+        "email": email,
+        "password": password,
+        "filename": file.filename,
+        "content_type": file.content_type,
     }
 
 
-if __name__ == '__main__':
-    uvicorn.run('main:app', reload=True)
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)

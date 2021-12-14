@@ -24,47 +24,41 @@ class Member(BaseModel):
     inventory: List[Item] = []
 
 
-@app.get('/me')
+@app.get("/me")
 def get_me():
     # http GET :8000/me
     inventory = [
-        Item(name='의류', price=500.0, amount=1),
-        Item(name='자동차', price=1500.0, amount=2),
-        Item(name='집', price=300.0, amount=5),
+        Item(name="의류", price=500.0, amount=1),
+        Item(name="자동차", price=1500.0, amount=2),
+        Item(name="집", price=300.0, amount=5),
     ]
-    fake_user = Member(name='park', password=1234,
-                       inventory=inventory)
+    fake_user = Member(name="park", password=1234, inventory=inventory)
     return fake_user
 
 
-@app.get('/member')
+@app.get("/member")
 def get_member():
     # http GET :8000/member
     inventory = [
-        Item(name='의류', price=500_000.0, amount=1),
-        Item(name='자동차', price=150_000_000.0, amount=2),
-        Item(name='집', price=3_000_000_000.0, amount=5),
+        Item(name="의류", price=500_000.0, amount=1),
+        Item(name="자동차", price=150_000_000.0, amount=2),
+        Item(name="집", price=3_000_000_000.0, amount=5),
     ]
-    fake_user = Member(name='park', password=1234,
-                       inventory=inventory)
+    fake_user = Member(name="park", password=1234, inventory=inventory)
     return fake_user
 
 
-@app.post('/member')
+@app.post("/member")
 def create_member(member: Member):
     # http POST :8000/new/member name=park password=1234 inventory:='[{"name": "apple", "price": 20.1}, {"name": "banana", "price": 50.1, "amount": 5}]'
-    return {
-        'member': member
-    }
+    return {"member": member}
 
 
-@app.put('/member')
+@app.put("/member")
 def update_member(member: Member):
     # http PUT :8000/member name=park password=123
-    return {
-        'member': member
-    }
+    return {"member": member}
 
 
-if __name__ == '__main__':
-    uvicorn.run('03_requestbody:app', reload=True)
+if __name__ == "__main__":
+    uvicorn.run("03_requestbody:app", reload=True)
