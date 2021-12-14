@@ -14,4 +14,6 @@ class User(UserBase):
     is_active: bool
 
     class Config:
+        # !!! 중요 !!!
+        # pydantic  과 sqlalchemy 연동
         orm_mode = True

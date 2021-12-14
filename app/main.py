@@ -12,10 +12,10 @@ from database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+# /static 경로 생성과 static 자원 등록
+# http://localhost:8000/static/login.html 접근가능
 app.mount('/static', StaticFiles(directory='static'), name='static')
 
-
-# http://localhost:8000/static/login.html 접근가능
 
 def get_db():
     db = SessionLocal()
