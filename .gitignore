@@ -1,4 +1,5 @@
 .idea
 venv
-/source/log.txt
+log.txt
 env.json
+.env

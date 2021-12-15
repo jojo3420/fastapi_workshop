@@ -1,8 +1,10 @@
 from sqlalchemy import Boolean, Column, Integer, String
-from database import Base
+from telbot.database import Base
 
 
 class User(Base):
+    """sqlalchemy model USER Table"""
+
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)

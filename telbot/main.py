@@ -1,42 +1,39 @@
 from typing import List
 
-import uvicorn
+# import uvicorn
+
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-import uvicorn
-import models
-import schemas
-from database import SessionLocal, engine
+
+from telbot import schemas
+from telbot import models
+from telbot.lib.telegram import TelegramBot
+from telbot.config import settings
+from telbot.database import get_conn
 
 app = FastAPI()
-
-# models 구조에 따라 DB 생성
-models.Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
-# /static 경로 생성과 static 자원 등록
-# http://localhost:8000/static/login.html 접근가능
-app.mount("/static", StaticFiles(directory="static"), name="static")
+bot = TelegramBot(settings.TELEGRAM_BOT_TOKEN)
 
 
-def get_conn():
-    conn = SessionLocal()
-    try:
-        yield conn
-    finally:
-        conn.close()
+@app.on_event("startup")
+def startup():
+    from telbot.database import engine
+
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+    models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
 def index():
-    return {"msg": "hello world"}
+    return "hello world"
+
+
+@app.get("/me")
+async def get_me():
+    return await bot.get_bot_info()
 
 
 @app.get("/users", response_model=List[schemas.User])
 def read_users(conn: Session = Depends(get_conn)):
     return conn.query(models.User).all()
-
-
-if __name__ == "__main__":
-    uvicorn.run("telbot.main:app", reload=True)

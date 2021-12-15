@@ -1,20 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from utils import load_env
+from telbot.config import settings
 
-env: dict = load_env("env.json")
-
-user = env.get("USER")
-password = env.get("PASSWORD")
-schema = env.get("SCHEMA")
-host = env.get("HOST")
-port = env.get("PORT")
-
-url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{schema}"
-
+url = f"mysql+pymysql://{settings.DB_USERNAME}:{settings.DB_PASSWORD.get_secret_value()}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_SCHEMA}"
 engine = create_engine(url)
-
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
-
 Base = declarative_base()
+
+
+def get_conn():
+    """create session and return db conn"""
+    conn = SessionLocal()
+    try:
+        yield conn
+    finally:
+        conn.close()
