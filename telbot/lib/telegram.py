@@ -1,6 +1,8 @@
 from typing import Union
 from pydantic import SecretStr
+from devtools import debug
 import httpx
+from httpx import Response
 
 
 class TelegramBot:
@@ -22,6 +24,21 @@ class TelegramBot:
 
     async def get_bot_info(self):
         """get current bot info"""
-        url = f"{self.host}/getMe"
-        res = await self.client.get(url)
+        res = await self.client.get("/getMe")
+        return res.json()
+
+    async def get_webhook_info(self):
+        """get webhook info"""
+        res: Response = await self.client.get("/getWebhookInfo")
+        # debug(res)
+        return res.json()
+
+    async def set_webhook_url(self, url: str):
+        """set webhook response host url"""
+        res: Response = await self.client.post("/setWebhook", data={"url": url})
+        # debug(res)
+        return res.json()
+
+    async def delete_webhook_url(self):
+        res: Response = await self.client.get("/deleteWebhook")
         return res.json()
