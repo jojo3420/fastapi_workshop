@@ -1,0 +1,6 @@
+mysql> GRANT ALL ON *.* TO admin@'%';
+mysql> SHOW GRANTS FOR admin@'%';
+# 또는 admin 접속 중이라면
+mysql> SHOW GRANTS FOR CURRENT_USER();
+mysql> CREATE DATABASE dev;
+mysql> SHOW DATABASES;
