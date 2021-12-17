@@ -2,16 +2,11 @@ from pydantic import HttpUrl
 from devtools import debug
 from fastapi import APIRouter, Request, Body, Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import func
-
-from telbot import schemas
 from telbot import models
 from telbot.database import get_conn
 from telbot.lib.telegram.telegram import TelegramBot
 from telbot.config import settings
 from telbot.lib.telegram.schema import Update, Member
-
-from telbot.lib.service.webhook import add_new_member
 
 
 bot = TelegramBot(settings.TELEGRAM_BOT_TOKEN)
