@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     DB_SCHEMA: str
 
     TELEGRAM_BOT_TOKEN: SecretStr
+    TELEGRAM_CHAT_ID: SecretStr
 
     class Config:
         env_file = ".env"

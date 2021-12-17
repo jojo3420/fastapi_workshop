@@ -6,6 +6,13 @@ from pydantic import BaseModel, Field
 from devtools import debug
 
 
+class ResourceId(BaseModel):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 class UserBase(BaseModel):
     email: str
 
@@ -32,6 +39,19 @@ class Member(BaseModel):
     username: Optional[str]
     language_code: Optional[str]
     score: int = Field(default=0)
+
+    class Config:
+        orm_mode = True
+
+
+class QuizCreate(BaseModel):
+    question: str = Field(..., title="퀴즈 질문", example="🇰🇷 대한민국의 수도는?")
+    examples: str = Field(..., title="퀴즈 보기", example="1️⃣ 서울\n2️⃣ 인천\n3️⃣ 부산\n4️⃣ 대구")
+    answer: int = Field(..., title="정답", example=1)
+
+
+class Quiz(QuizCreate):
+    id: int
 
     class Config:
         orm_mode = True
