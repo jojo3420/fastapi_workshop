@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>QuizBot</title>
+    <link href="style.css" rel="stylesheet">
+    <!--    <script src="jwt-decode.js"></script>-->
+</head>
+
+<body>
+<!--<nav>-->
+<!--    <div>-->
+<!--        <ul>-->
+<!--            <li><img src="#" alt="avatar" id="avatar"></li>-->
+<!--            <li id="username"></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+<main>
+    <div class="theme">
+        <h1>🆀 퀴즈 문제 만들기</h1>
+        <form method="post" action="/v1/quiz/form" id="quiz" enctype="multipart/form-data">
+            <input type="text" name="question" placeholder="문제" required="required"/>
+            <textarea name="examples" placeholder="1️. 보기&#10;2️. 보기&#10;3️. 보기&#10;4️. 보기" rows=6
+                      required="required"></textarea>
+            <input type="number" name="answer" placeholder="정답" min="1" required="required"/>
+            <button type="submit" class="btn btn-primary btn-block btn-large" onclick="submitData()">만들기</button>
+        </form>
+    </div>
+</main>
+<script>
+    // const btn = document.querySelector('button.btn.btn-primary')
+    // btn.addEventListener('click', () => {
+    //     const body = {
+    //         question: document.querySelector('input[name="question"]').value,
+    //         examples: document.querySelector('textarea[name="examples"]').value,
+    //         answer: document.querySelector('input[name="answer"]').value,
+    //     }
+    //     console.log({body})
+    // })
+
+    function submitData(question, examples, answer) {
+        let form = new FormData(document.getElementById('quiz'));
+        // console.log(form)
+        fetch('/v1/quiz/form', {
+            method: 'POST',
+            body: form,
+        }).then(response => {
+            if (response.ok) {
+                alert('🎉 문제가 추가되었습니다!');
+                location.reload();
+            }
+            throw new Error('network error');
+        }).catch(error => {
+            console.error({error})
+            console.error("🥵 실패했습니다..")
+        });
+    }
+</script>
+</body>
+
+</html>
